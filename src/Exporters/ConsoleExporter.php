@@ -8,9 +8,8 @@ use Zamion101\WideEvents\Contracts\WideEventLoggerContract;
 
 class ConsoleExporter implements WideEventExporter
 {
-
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function flush(WideEventLoggerContract $event): void
     {

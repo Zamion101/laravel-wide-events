@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class WideEvent extends Model
 {
-
     protected $casts = [
         'payload' => 'array',
     ];

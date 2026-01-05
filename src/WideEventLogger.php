@@ -6,8 +6,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Traits\Conditionable;
 use Spatie\Macroable\Macroable;
 use Throwable;
-use Zamion101\WideEvents\Contracts\WideEventLoggerContract;
 use Zamion101\WideEvents\Contracts\WideEventExporter;
+use Zamion101\WideEvents\Contracts\WideEventLoggerContract;
 use Zamion101\WideEvents\Contracts\WideEventSampler;
 use Zamion101\WideEvents\Samplers\DefaultSampler;
 
@@ -17,8 +17,8 @@ class WideEventLogger implements WideEventLoggerContract
     use Macroable;
 
     protected ?WideEventExporter $exporter = null;
-    private array $context = [];
 
+    private array $context = [];
 
     public function __construct(WideEventExporter $exporter)
     {
@@ -46,6 +46,7 @@ class WideEventLogger implements WideEventLoggerContract
         // It's the first time we are touching this key
         if ($current === null) {
             Arr::set($this->context, $key, $value);
+
             return;
         }
 
@@ -54,6 +55,7 @@ class WideEventLogger implements WideEventLoggerContract
         if (is_array($current) && is_array($value) && Arr::isAssoc($value)) {
             $merged = array_replace_recursive($current, $value);
             Arr::set($this->context, $key, $merged);
+
             return;
         }
 
@@ -75,7 +77,6 @@ class WideEventLogger implements WideEventLoggerContract
     {
         return Arr::get($this->context, $key, $default);
     }
-
 
     public function forget(string $key): void
     {
@@ -116,6 +117,7 @@ class WideEventLogger implements WideEventLoggerContract
 
         if (config('wide-events.enabled') === false) {
             $this->context = [];
+
             return;
         }
 
@@ -123,12 +125,12 @@ class WideEventLogger implements WideEventLoggerContract
         $sampler = app($samplerClass);
 
         // If the sampler is not implemented correctly fallback to Default Sampler
-        if (!$sampler instanceof WideEventSampler) {
+        if (! $sampler instanceof WideEventSampler) {
             $sampler = app(DefaultSampler::class);
             $this->push('debug', [
                 'notes' => [
                     "$samplerClass is not a instance of Zamion101\WideEvents\Contracts\WideEventSampler, used DefaultSampler as fallback.",
-                ]
+                ],
             ]);
         }
         $this->push('debug', [
@@ -140,11 +142,11 @@ class WideEventLogger implements WideEventLoggerContract
             $this->forget('debug');
         }
 
-        if (!$sampler->shouldSample($this)) {
+        if (! $sampler->shouldSample($this)) {
             $this->context = [];
+
             return;
         }
-
 
         try {
             $this->exporter->flush($this);
@@ -157,6 +159,4 @@ class WideEventLogger implements WideEventLoggerContract
     {
         return $this->context;
     }
-
-
 }

@@ -23,23 +23,25 @@ class WideEventsServiceProvider extends PackageServiceProvider
             $exporter = config('wide-events.exporter');
             $exporters = config('wide-events.exporters');
 
-            if (!isset($exporters[$exporter])) {
+            if (! isset($exporters[$exporter])) {
                 throw new \RuntimeException("Unknown exporter '{$exporter}'");
             }
 
             $exporterConfig = $exporters[$exporter];
             $className = $exporterConfig['exporter'];
-            if (!is_a($className, WideEventExporter::class, true)) {
-                throw new \RuntimeException("The given exporter class `{$className}` does not implement `" . WideEventExporter::class . '`');
+            if (! is_a($className, WideEventExporter::class, true)) {
+                throw new \RuntimeException("The given exporter class `{$className}` does not implement `".WideEventExporter::class.'`');
             }
+
             return $app->make($className);
         });
 
         $this->app->scoped(WideEventLoggerContract::class, static function ($app) {
             $className = config('wide-events.logger');
-            if (!is_a($className, WideEventLoggerContract::class, true)) {
-                throw new \RuntimeException("The given logger class `{$className}` does not implement `" . WideEventLoggerContract::class . '`');
+            if (! is_a($className, WideEventLoggerContract::class, true)) {
+                throw new \RuntimeException("The given logger class `{$className}` does not implement `".WideEventLoggerContract::class.'`');
             }
+
             return $app->make($className);
         });
 

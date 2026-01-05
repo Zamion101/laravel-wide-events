@@ -16,6 +16,7 @@ use Zamion101\WideEvents\Contracts\WideEventLoggerContract;
  * @method static \Throwable getError()
  * @method static void flush()
  * @method static array toArray()
+ *
  * @see \Zamion101\WideEvents\WideEventLoggerContract
  */
 class WideEvents extends Facade

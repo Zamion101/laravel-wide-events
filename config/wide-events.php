@@ -1,6 +1,5 @@
 <?php
 
-
 return [
     /*
      * If set to false, no events will be logged.
@@ -53,7 +52,7 @@ return [
              * Laravel's database.default will be used instead.
              */
             'database_connection' => env('WIDE_EVENTS_DB_CONNECTION'),
-        ]
+        ],
     ],
 
     /*
@@ -68,7 +67,7 @@ return [
             'header_name' => 'X-Trace-Id',
             // Regex must have a named group 'trace_id', example for w3c trace context
             // You can use https://regexr.com/ to create regex
-            'regex' => '/(?<version>[0-9]+)\-(?<trace_id>[a-f0-9]+)\-(?<span_id>[a-f0-9]+)\-(?<trace_flags>[0-9]+)/'
+            'regex' => '/(?<version>[0-9]+)\-(?<trace_id>[a-f0-9]+)\-(?<span_id>[a-f0-9]+)\-(?<trace_flags>[0-9]+)/',
         ],
         'span_id' => [
             // Available extractors are w3c,regex
@@ -77,8 +76,8 @@ return [
             'header_name' => 'X-Span-Id',
             // Regex must have a named group 'span_id', example for w3c trace context
             // You can use https://regexr.com/ to create regex
-            'regex' => '/(?<version>[0-9]+)\-(?<trace_id>[a-f0-9]+)\-(?<span_id>[a-f0-9]+)\-(?<trace_flags>[0-9]+)/'
-        ]
+            'regex' => '/(?<version>[0-9]+)\-(?<trace_id>[a-f0-9]+)\-(?<span_id>[a-f0-9]+)\-(?<trace_flags>[0-9]+)/',
+        ],
     ],
 
     /*

@@ -11,17 +11,14 @@ use Zamion101\WideEvents\GitHash;
 
 final class WideEventMiddleware
 {
-
     public function __construct(
         private readonly WideEventLoggerContract $logger,
-    )
-    {
-    }
+    ) {}
 
     /**
      * Handle an incoming request.
      *
-     * @param \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response) $next
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
@@ -32,8 +29,8 @@ final class WideEventMiddleware
 
         $this->logger->set('timestamp', $startTime->toIso8601String());
         $this->logger->set('fingerprint', sha1(implode('|', array_filter(
-            [$request->ip(), $request->userAgent(),$request->user()?->id],
-            static fn($el) => $el !== null
+            [$request->ip(), $request->userAgent(), $request->user()?->id],
+            static fn ($el) => $el !== null
         ))));
         $this->logger->set('trace_id', $traceId);
         $this->logger->set('span_id', $spanId);
@@ -48,7 +45,7 @@ final class WideEventMiddleware
             'user_agent' => $request->userAgent(),
             'query' => $request->query(),
             'accepts' => $request->getAcceptableContentTypes(),
-            'size_bytes' => (int)$request->server('CONTENT_LENGTH')
+            'size_bytes' => (int) $request->server('CONTENT_LENGTH'),
         ]);
 
         if ($user = $request->user()) {
@@ -107,8 +104,8 @@ final class WideEventMiddleware
             if (count($parts) >= 2 && strlen($parts[1]) === 32) {
                 return $parts[1];
             }
-        } else if ($extractor === 'regex') {
-            if (!isset($traceIdConfig['header_name'])) {
+        } elseif ($extractor === 'regex') {
+            if (! isset($traceIdConfig['header_name'])) {
                 return null;
             }
             $traceHeader = $request->header($traceIdConfig['header_name']);
@@ -143,8 +140,8 @@ final class WideEventMiddleware
             if (count($parts) >= 2 && strlen($parts[1]) === 32) {
                 return $parts[1];
             }
-        } else if ($extractor === 'regex') {
-            if (!isset($spanIdConfig['header_name'])) {
+        } elseif ($extractor === 'regex') {
+            if (! isset($spanIdConfig['header_name'])) {
                 return null;
             }
             $spanHeader = $request->header($spanIdConfig['header_name']);

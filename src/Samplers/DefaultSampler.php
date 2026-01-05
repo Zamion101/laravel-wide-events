@@ -9,15 +9,12 @@ use Zamion101\WideEvents\Contracts\WideEventSampler;
 
 class DefaultSampler implements WideEventSampler
 {
-
     public function __construct(
         protected Request $request,
-    )
-    {
-    }
+    ) {}
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function shouldSample(WideEventLoggerContract $event): bool
     {
@@ -41,7 +38,7 @@ class DefaultSampler implements WideEventSampler
             }
         }
 
-        $samplingProbability = (float)config('wide-events.sampling.sampling_probability');
+        $samplingProbability = (float) config('wide-events.sampling.sampling_probability');
 
         $event->set('debug.sampling_probability', $samplingProbability);
 

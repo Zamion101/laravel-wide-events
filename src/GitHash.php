@@ -25,11 +25,11 @@ class GitHash
         // 3. Try to read .git/HEAD directly (Fastest for Local Dev - avoids 'exec' overhead)
         $gitPath = base_path('.git');
         if (File::isDirectory($gitPath)) {
-            $head = trim(File::get($gitPath . '/HEAD'));
+            $head = trim(File::get($gitPath.'/HEAD'));
 
             // If HEAD points to a ref (e.g., ref: refs/heads/main)
             if (preg_match('/^ref: (.+)$/', $head, $matches)) {
-                $refPath = $gitPath . '/' . $matches[1];
+                $refPath = $gitPath.'/'.$matches[1];
                 if (File::exists($refPath)) {
                     return trim(File::get($refPath));
                 }
@@ -42,6 +42,7 @@ class GitHash
         // 4. Fallback to exec (Slowest, but works if .git exists but logic above fails)
         try {
             $hash = exec('git rev-parse --short HEAD');
+
             return $hash ?: null;
         } catch (\Throwable $e) {
             return null;
