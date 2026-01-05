@@ -1,24 +1,26 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "zamion101/laravel-wide-events",
+    "description": "Laravel implementation of Wide Events \"Canonical Context Logging\" ",
     "keywords": [
-        ":vendor_name",
+        "Zamion101",
         "laravel",
-        ":package_slug"
+        "laravel-wide-events"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/zamion101/laravel-wide-events",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Hüseyin Berke Bütün",
+            "email": "8071263+Zamion101@users.noreply.github.com",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": "^8.4",
+        "php": ">=8.1",
         "spatie/laravel-package-tools": "^1.16",
-        "illuminate/contracts": "^11.0||^12.0"
+        "illuminate/contracts": "^11.0||^12.0",
+        "illuminate/support": "^10.0|^11.0|^12.0",
+        "illuminate/http": "^10.0|^11.0|^12.0"
     },
     "require-dev": {
         "laravel/pint": "^1.14",
@@ -35,14 +37,13 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "Zamion101\\WideEvents\\": "src/",
+            "Zamion101\\WideEvents\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/",
-            "Workbench\\App\\": "workbench/app/"
+            "Zamion101\\WideEvents\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -63,10 +64,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Zamion101\\WideEvents\\WideEventsServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "LaravelWideEvents": "Zamion101\\WideEvents\\Facades\\WideEvent"
             }
         }
     },

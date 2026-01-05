@@ -1,0 +1,35 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up()
+    {
+        Schema::connection(config('wide-events.exporters.database.database_connection'))->create(config('wide-events.exporters.database.table_name'), function (Blueprint $table) {
+            $table->id();
+
+            $table->timestamp('occurred_at')->useCurrent()->index();
+            //$table->string('type')->index();
+
+            // Fast path for PostgresSQL
+            if(config('wide-events.database_connection') === 'pgsql'){
+                $table->jsonb('payload');
+                // GIN index for fast JSON querying
+                $table->index('payload', config('wide-events.exporters.database.table_name') . '_payload_gin', 'gin');
+            }
+            // Slow path for all the other
+            else{
+                $table->longtext('payload');
+            }
+
+            $table->timestamps();
+        });
+    }
+    public function down()
+    {
+        Schema::connection(config('wide-events.exporters.database.database_connection'))->dropIfExists(config('wide-events.exporters.database.table_name'));
+    }
+};
